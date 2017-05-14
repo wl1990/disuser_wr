@@ -10,7 +10,7 @@
     </parent>
   
   <groupId>com.test.wl</groupId>
-  <artifactId>disuser</artifactId>
+  <artifactId>disuser_wr</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>disuser Maven Webapp</name>
