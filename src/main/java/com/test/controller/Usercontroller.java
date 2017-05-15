@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,9 @@ public class Usercontroller {
     	 j.put("username", user.getName());
     	 j.put("result", f);
     	 return j;
+    	 // 1463270400000
+    	
+    	 
 	}
 	
 	/**

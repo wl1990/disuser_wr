@@ -20,17 +20,19 @@ public class DataSourceAspect {
            Class<?>[] classz=target.getClass().getInterfaces();
            Class<?>[] parameterTypes=((MethodSignature)point.getSignature()).getMethod().getParameterTypes();
 		try {
-			Method m = classz[0].getMethod(method, parameterTypes);
+			Method m = target.getClass().getMethod(method, parameterTypes);
 			System.out.println(m.getName());
 			if(m!=null && m.isAnnotationPresent(DataSource.class)){
 				DataSource data=m.getAnnotation(DataSource.class);
 				System.out.println("user select data type:"+data.value());
 				HandleDataSource.putDataSource(data.value());
+			}else if(m!=null){
+				System.out.println("default datasource read");
+				HandleDataSource.putDataSource("read");
 			}
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
-           
            
         }  
 	

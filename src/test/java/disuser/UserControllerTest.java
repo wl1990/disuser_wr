@@ -1,5 +1,7 @@
 package disuser;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +28,8 @@ public class UserControllerTest {
 		JSONObject json=JSONObject.parseObject(exchange.getBody());*/
 		try {
 			// http://localhost:8081/disuser/swagger-ui.html
-			String s1=HttpClientUtil.httpGetRequest("http://localhost:8081/disuser/user/1234");
-			System.out.println("--"+s1);
+		/*	String s1=HttpClientUtil.httpGetRequest("http://localhost:8081/disuser/user/1234");
+			System.out.println("--"+s1);*/
 			/*Map<String,Object> map=new HashMap<String,Object>();
 			map.put("userName", "123");
 			map.put("email", "123");
@@ -35,6 +37,10 @@ public class UserControllerTest {
 			jsonObject.putAll(map);
 			String	s = HttpClientUtil.httpPostRequest("http://localhost:8081/san/userupdate",jsonObject);
 			System.out.println("----#$%---"+s);*/
+			
+			Date date=new Date(1463270400000L);
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+			System.out.println(sdf.format(date));
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

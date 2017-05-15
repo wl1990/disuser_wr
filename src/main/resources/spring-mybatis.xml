@@ -17,7 +17,7 @@
 	<context:property-placeholder location="classpath:application.properties"/>
 	<!-- 配置read数据源 -->
 	<bean name="readDataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
+		destroy-method="close">
 		<property name="url" value="${jdbc_url_r}" />
 		<property name="username" value="${jdbc_username_r}" />
 		<property name="password" value="${jdbc_password_r}" />
@@ -51,9 +51,9 @@
 		<!-- 监控数据库 -->
 		<property name="filters" value="mergeStat" />
 	</bean>
-	<!-- 配置write数据源 -->
+	<!-- 配置write数据源  spring boot spring-boot-autoconfigure.jar 有会初始化DataSourceInitializer类 这个类有方法init会去获取datasource-->
 	<bean name="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource"
-		init-method="init" destroy-method="close">
+		init-method="init" primary="true" destroy-method="close">
 		<property name="url" value="${jdbc_url_w}" />
 		<property name="username" value="${jdbc_username_w}" />
 		<property name="password" value="${jdbc_password_w}" />
@@ -88,8 +88,8 @@
 		<property name="filters" value="mergeStat" />
 	</bean>
 
-	<bean id="datasource" class="com.test.utils.ChooseDataSource">
-		<property name="targetDataSources">      
+    <bean id="dataSource" class="com.test.utils.ChooseDataSource">  
+        <property name="targetDataSources">      
           <map key-type="java.lang.String">      
               <!-- write -->    
              <entry key="write" value-ref="writeDataSource"/>      
@@ -97,8 +97,9 @@
              <entry key="read" value-ref="readDataSource"/>      
           </map>               
         </property>   
-        <property name="defaultTargetDataSource" ref="readDataSource"/>
-	</bean>
+        <property name="defaultTargetDataSource" ref="readDataSource"/>      
+      
+    </bean>  
 	<!-- myBatis文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="classpath:mybatis_config.xml" />
@@ -154,12 +155,14 @@
 	<!--为业务逻辑层的方法解析@DataSource注解  为当前线程的routeholder注入数据源key  -->
 	<bean id="dataSourceAspect" class="com.test.utils.DataSourceAspect"/>
 	
-	<aop:config proxy-target-class="true">
+<!-- 	<aop:config>
 		<aop:pointcut id="transactionPointcut" expression="execution(* com.test.service..*.*(..))" />
-		<aop:advisor pointcut-ref="transactionPointcut"
-			advice-ref="transactionAdvice" />
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
+	</aop:config> -->
+	
+	<aop:config proxy-target-class="true">
 		<aop:aspect id="dataSourceAspect" ref="dataSourceAspect" order="1">
-			<aop:pointcut id="tx" expression="execution(* com.test.service..*.*(..))"/>
+			<aop:pointcut id="tx" expression="execution(* com.test.service.*.*(..))"/>
 			<aop:before pointcut-ref="tx" method="before"/>
 		</aop:aspect>
 	</aop:config>
