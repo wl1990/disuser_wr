@@ -17,6 +17,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+	List<User> getUserList();
+
 	
 
 }

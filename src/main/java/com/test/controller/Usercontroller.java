@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.test.model.User;
 import com.test.service.UserService;
@@ -35,6 +36,7 @@ public class Usercontroller {
     	 j.put("result", f);
     	 return j;
 	}
+	
 	@RequestMapping(value="/adduser",method=RequestMethod.POST)
 	public JSONObject addUser(@RequestBody User user){
 		 int f=userService.insertUser(user);
@@ -57,6 +59,18 @@ public class Usercontroller {
 	public JSONObject getUser(@PathVariable("id") Integer id){
 		User user=userService.getUserById(id);
     	 return (JSONObject) JSON.toJSON(user);
+	}
+	
+	/**
+	 * 
+	 * @param username
+	 * @return
+	 * @throws NebulaException
+	 */
+	@RequestMapping(value="/users",method=RequestMethod.GET)
+	public JSONArray getUserList(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
+		List<User> user=userService.getUserList(pageNum,pageSize);
+    	 return  (JSONArray) JSON.toJSON(user);
 	}
 	
 	/**
