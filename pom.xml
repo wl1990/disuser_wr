@@ -16,6 +16,9 @@
   <name>disuser Maven Webapp</name>
   <url>http://maven.apache.org</url>
   
+  <properties>
+  	<esapi.version>2.1.0</esapi.version>
+  </properties>
   <dependencies>
    <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -165,7 +168,12 @@
 			 <artifactId>spring-plugin-core</artifactId>
 			 <version>1.1.0.RELEASE</version>
 		</dependency>
-		
+		<!--esapi   -->
+		<dependency>
+			<groupId>org.owasp.esapi</groupId>
+			<artifactId>esapi</artifactId>
+			<version>${esapi.version}</version>
+		</dependency>
 		<!-- rest hateoas -->
   </dependencies>
   <build>

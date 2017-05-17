@@ -30,7 +30,7 @@ public class DataSourceAspect {
 				System.out.println("default datasource read");
 				HandleDataSource.putDataSource("read");
 			}
-		} catch (NoSuchMethodException | SecurityException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
            

@@ -50,6 +50,11 @@
 		<property name="logAbandoned" value="true" />
 		<!-- 监控数据库 -->
 		<property name="filters" value="mergeStat" />
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter"/>
+			</list>
+		</property>
 	</bean>
 	<!-- 配置write数据源  spring boot spring-boot-autoconfigure.jar 有会初始化DataSourceInitializer类 这个类有方法init会去获取datasource-->
 	<bean name="writeDataSource" class="com.alibaba.druid.pool.DruidDataSource"
@@ -86,8 +91,18 @@
 		<property name="logAbandoned" value="true" />
 		<!-- 监控数据库 -->
 		<property name="filters" value="mergeStat" />
+		<property name="proxyFilters">
+			<list>
+				<ref bean="stat-filter"/>
+			</list>
+		</property>
 	</bean>
-
+	<!--  -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<property name="slowSqlMillis" value="10"/>
+		<property name="logSlowSql" value="true"/>
+	</bean>
+	
     <bean id="dataSource" class="com.test.utils.ChooseDataSource">  
         <property name="targetDataSources">      
           <map key-type="java.lang.String">      
@@ -166,5 +181,7 @@
 			<aop:before pointcut-ref="tx" method="before"/>
 		</aop:aspect>
 	</aop:config>
+	
+
 	
 </beans>
