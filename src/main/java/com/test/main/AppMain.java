@@ -7,10 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 
+import com.alibaba.druid.support.http.StatViewServlet;
 import com.test.filter.ExceptionTestFilter;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -33,7 +35,16 @@ public class AppMain {
         urlPatterns.add("/testException");  
         registrationBean.setUrlPatterns(urlPatterns);  
         return registrationBean;  
-    }  
+    } 
+	
+	/**
+	 * druid 监控
+	 * @return
+	 */
+	@Bean
+	public ServletRegistrationBean servletRegistrationBean(){
+		return new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
+	}
 	@Bean
 	public HttpMessageConverters restFileDownloadSupport(){
 		ByteArrayHttpMessageConverter arrayHttpMessageConverter=new ByteArrayHttpMessageConverter();

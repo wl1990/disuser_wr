@@ -13,5 +13,6 @@ public class RedisConection {
 		j.set("223", "234");
 		System.out.println(j.get("223"));
 		
+		
 	}
 }

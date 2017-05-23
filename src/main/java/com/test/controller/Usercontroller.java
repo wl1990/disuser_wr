@@ -87,4 +87,9 @@ public class Usercontroller {
 	public void testExceptionNoFilter() throws NebulaException{
     	throw new NebulaException(500,"exception test");
 	}
+	
+	@RequestMapping(value="/druid",method=RequestMethod.GET)
+	public JSONArray testDruid() throws NebulaException{
+		return getUserList(1,10);
+	}
 }

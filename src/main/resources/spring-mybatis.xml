@@ -170,10 +170,10 @@
 	<!--为业务逻辑层的方法解析@DataSource注解  为当前线程的routeholder注入数据源key  -->
 	<bean id="dataSourceAspect" class="com.test.utils.DataSourceAspect"/>
 	
-<!-- 	<aop:config>
+	<aop:config>
 		<aop:pointcut id="transactionPointcut" expression="execution(* com.test.service..*.*(..))" />
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
-	</aop:config> -->
+	</aop:config>
 	
 	<aop:config proxy-target-class="true">
 		<aop:aspect id="dataSourceAspect" ref="dataSourceAspect" order="1">
@@ -182,6 +182,19 @@
 		</aop:aspect>
 	</aop:config>
 	
+	<!-- spring 监控 -->
+	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>com.test.service..*</value>
+			</list>
+		</property>
+	</bean>
+	
+	<aop:config proxy-target-class="true">
+		<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="druid-stat-pointcut"/>
+	</aop:config>
 
 	
 </beans>
