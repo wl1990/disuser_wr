@@ -22,10 +22,13 @@ public class RedisLuaTest {
 		System.out.println(scriptLoad);
 		Object evalsha=jedis.evalsha(scriptLoad,keys,vals);
 		System.out.println(evalsha);
-		Object pobj=jedis.eval("if (redis.call('exists',KEYS[1])==0) then redis.call('hset',KEYS[1],ARGV[2],1);redis.call('pexpire',KEYS[1],ARGV[1]);return nil;end;"
+	/*	Object pobj=jedis.eval("if (redis.call('exists',KEYS[1])==0) then redis.call('hset',KEYS[1],ARGV[2],1);redis.call('pexpire',KEYS[1],ARGV[1]);return nil;end;"
 				+ "if(redis.call('hexists',KEYS[1],ARGV[2])==1) then redis.call('hincrby',KEYS[1],ARGV[2],1);redis.call('pexpire',KEYS[1],ARGV[1]);return nil;end;return redis.call('pttl',KEYS[1]);"
 				, Arrays.asList(new String[]{"lock"}),
-				Arrays.asList(new String[]{"100000","lock1"}));
-		System.out.println("---"+pobj);
+				Arrays.asList(new String[]{"10000","lock1"}));
+		System.out.println("--+++-"+pobj);*/
+		
+		Object ob=jedis.eval("return redis.call('pttl',KEYS[1])",Arrays.asList(new String[]{"lock"}),Arrays.asList(new String[]{"10000","lock1"}));
+		System.out.println("===="+ob);
 	}
 }
