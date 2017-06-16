@@ -45,7 +45,6 @@ public class Usercontroller {
     	 j.put("result", f);
     	 return j;
     	 // 1463270400000
-    	
     	 
 	}
 	
