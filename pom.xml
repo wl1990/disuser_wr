@@ -11,7 +11,7 @@
   
   <groupId>com.test.wl</groupId>
   <artifactId>disuser_wr</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>disuser Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -175,6 +175,10 @@
 			<version>${esapi.version}</version>
 		</dependency>
 		<!-- rest hateoas -->
+		
+	
+       
+   
   </dependencies>
   <build>
   	  	 <plugins>
@@ -213,6 +217,11 @@
                 </dependencies>  
             </plugin>  
 			
+			<plugin>
+            	<groupId>org.springframework.boot</groupId>
+            	<artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
         </plugins>
     <finalName>disuser</finalName>
   </build>
