@@ -38,14 +38,14 @@ public class HttpClientUtil {
 
     // 连接池最大连接数
     private final static Integer MAX_TOTAL=100;
-    // 路由�?大连接数，默认�?�是2
+    // max connection num ,default 2
     private final static Integer DEFAULT_MAX_PER_ROUTE=100;
 
     private static void init() {
         if (cm == null) {
             cm = new PoolingHttpClientConnectionManager();
-            cm.setMaxTotal(MAX_TOTAL);//�?大连接数
-            cm.setDefaultMaxPerRoute(DEFAULT_MAX_PER_ROUTE);//路由�?大连接数
+            cm.setMaxTotal(MAX_TOTAL);
+            cm.setDefaultMaxPerRoute(DEFAULT_MAX_PER_ROUTE);
         }
     }
 
