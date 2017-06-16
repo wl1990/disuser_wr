@@ -42,7 +42,7 @@ public class SafeEncodeUtil {
 		return safeString;
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println(safeEncoder("werrf中文erertf<html><script></script></html>"));
-	}
+	}*/
 }

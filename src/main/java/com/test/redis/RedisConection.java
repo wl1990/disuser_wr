@@ -11,7 +11,7 @@ public class RedisConection {
 		return jedis;
 	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		Jedis j=getJedis();
 		j.set("223", "234");
 		System.out.println(j.get("223"));
@@ -24,5 +24,5 @@ public class RedisConection {
 		System.out.println(j.hexists("hkey", "123")+"--"+j.hexists("hkey", "q"));
 		j.hdel("hkey", "123");
 		System.out.println(j.hexists("hkey", "123")+"--"+j.hexists("hkey", "q"));
-	}
+	}*/
 }
