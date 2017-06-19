@@ -3,6 +3,10 @@ package com.test.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -13,15 +17,24 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 
 import com.alibaba.druid.support.http.StatViewServlet;
+import com.test.env.SendMessage;
 import com.test.filter.ExceptionTestFilter;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @ImportResource("classpath:spring-mybatis.xml")
-@SpringBootApplication(scanBasePackages={ "com.test.controller","com.test.service","com.test.handler"})
+@SpringBootApplication(scanBasePackages={ "com.test.controller","com.test.service","com.test.handler","com.test.env"})
 @EnableSwagger2
 public class AppMain {
+	@Value("${app.name}")
+	private String name;
+	@Autowired
+	private SendMessage sendMessage;
 	
+	@PostConstruct
+	public void init(){
+		sendMessage.send();
+	}
 	/**
 	 * 加载过滤器，测试@ControllerAdvice
 	 * @return
@@ -50,6 +63,7 @@ public class AppMain {
 		ByteArrayHttpMessageConverter arrayHttpMessageConverter=new ByteArrayHttpMessageConverter();
 		return new HttpMessageConverters(arrayHttpMessageConverter);
 	}
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(AppMain.class, args);
