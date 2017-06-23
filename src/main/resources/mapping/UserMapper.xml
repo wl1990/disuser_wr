@@ -88,5 +88,25 @@
     <include refid="Base_Column_List" />
     from user
   </select>
+  
+   <insert id="insertUserList" parameterType="java.util.List">
+		insert into user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			name,
+			birthday,
+		</trim>
+		values
+		<foreach collection="list" item="item" index="index" separator="," >
+			(
+			#{item.name},
+			#{item.birthday}
+			)
+		</foreach>
+		<!-- <trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="id!=null">#{id},</if>
+			<if test="name!=null">#{name},</if>
+			<if test="birthday!=null">#{birthday},</if>
+		</trim> -->
+	</insert>
 	
 </mapper>

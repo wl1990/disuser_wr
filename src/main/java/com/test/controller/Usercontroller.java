@@ -1,5 +1,6 @@
 package com.test.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +41,35 @@ public class Usercontroller {
 		 int f=userService.insertUser(user);
 		 JSONObject j=new JSONObject();
     	 j.put("username", user.getName());
+    	 j.put("result", f);
+    	 return j;
+    	 // 1463270400000
+    	 
+	}
+	
+	/**
+	 * multi user insert
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value="/addusers",method=RequestMethod.POST)
+	public JSONObject addUsers(){
+		 List<User> list=new ArrayList<User>();
+		 User u1=new User();
+		 u1.setBirthday(new Date());
+		 u1.setName("6221");
+		 User u2=new User();
+		 u2.setBirthday(new Date());
+		 u2.setName("6222");
+		 User u3=new User();
+		 u3.setBirthday(new Date());
+		 u3.setName("6222");
+		 list.add(u3);
+		 list.add(u2);
+		 list.add(u1);
+		 int f=userService.insertUserList(list);
+		 JSONObject j=new JSONObject();
+    	 j.put("username", JSONObject.toJSONString(list));
     	 j.put("result", f);
     	 return j;
     	 // 1463270400000

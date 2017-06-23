@@ -30,4 +30,8 @@ public class UserService {
 		PageHelper.startPage(pageNum, pageSize);
 		return userMapper.getUserList();
 	}
+
+	public int insertUserList(List<User> list) {
+		return userMapper.insertUserList(list);
+	}
 }
