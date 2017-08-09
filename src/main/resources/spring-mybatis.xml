@@ -113,7 +113,6 @@
           </map>               
         </property>   
         <property name="defaultTargetDataSource" ref="readDataSource"/>      
-      
     </bean>  
 	<!-- myBatis文件 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
