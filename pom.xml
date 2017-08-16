@@ -18,7 +18,9 @@
   
   <properties>
   	<esapi.version>2.1.0</esapi.version>
+  	<docker.image.prefix>eagle</docker.image.prefix>
   </properties>
+  
   <dependencies>
    <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -227,9 +229,9 @@
                     <executable>true</executable>
                 </configuration>
             </plugin>
+            <!--packet jar  end-->
             
-            <!-- set main method -->
-            
+            <!-- set main method start-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -242,7 +244,25 @@
                     </archive>
                 </configuration>
             </plugin>
-            
+            <!-- set main method end-->
+            <!-- tag::plugin[] -->
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.3</version>
+                <configuration>
+                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+                    <dockerDirectory>src/main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.jar</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+    <!-- end::plugin[] -->
             
         </plugins>
     <finalName>disuser</finalName>
