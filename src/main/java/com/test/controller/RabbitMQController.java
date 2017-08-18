@@ -1,22 +1,13 @@
 package com.test.controller;
 
 
-import org.springframework.amqp.core.Queue;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-
-
-
-
-
-
-
-
-
-import com.test.rabbitmq.BindConfig;
 import com.test.rabbitmq.CallBackSender;
 import com.test.rabbitmq.FanoutSender;
 import com.test.rabbitmq.HelloSender;
@@ -26,6 +17,7 @@ import com.test.rabbitmq.UserSender;
 
 @RestController
 public class RabbitMQController {
+	private static final Logger log=LoggerFactory.getLogger(RabbitMQController.class);
 	@Autowired
 	private HelloSender helloSender;
 	@Autowired
@@ -52,6 +44,7 @@ public class RabbitMQController {
 	public String oneToMany(){
 		for(int i=0;i<10;i++){
 			helloSender.send("msg:"+i);
+			log.info("msg:"+i);
 		}
 		return "send success";
 	}
