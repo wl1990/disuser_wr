@@ -64,10 +64,8 @@ public class AppMain {
 		return new HttpMessageConverters(arrayHttpMessageConverter);
 	}
 	
-	
 	public static void main(String[] args) {
 		SpringApplication.run(AppMain.class, args);
 	}
-	
 	
 }
