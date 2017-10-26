@@ -16,5 +16,6 @@ public class EventController {
 	@RequestMapping(value="/eventtest",method=RequestMethod.GET)
 	public void eventTest(@RequestParam String name){
 		eventService.register(name);
+		System.out.println("---"+Thread.currentThread().getId());
 	}
 }

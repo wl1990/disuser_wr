@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.test.model.User;
 import com.test.service.UserService;
+import com.test.service.springinit.InitBeanTest;
 import com.test.utils.NebulaException;
 
 @RestController

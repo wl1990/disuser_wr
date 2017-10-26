@@ -6,9 +6,13 @@ import java.util.Map;
 import redis.clients.jedis.Jedis;
 
 public class RedisConection {
+	private static final Jedis jedis=new Jedis("127.0.0.1",6379);
 	public static Jedis getJedis(){
-		Jedis jedis=new Jedis("127.0.0.1",6379);
-		return jedis;
+		return new Jedis("127.0.0.1",6379);
+	}
+	
+	public static Jedis getJedis(int port){
+		return new Jedis("127.0.0.1",port);
 	}
 	
 /*	public static void main(String[] args) {

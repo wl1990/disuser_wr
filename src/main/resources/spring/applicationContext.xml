@@ -17,6 +17,7 @@
 
     <import resource="classpath:spring-mybatis.xml" />
    
-
+	<bean id="initBeanTest" class="com.test.service.springinit.InitBeanTest"/>
+	<bean id="postProcessor" class="com.test.service.springinit.PostProcessor" scope="singleton" lazy-init="false" destroy-method="destroy"/>
 
 </beans>
