@@ -7,7 +7,7 @@ public class MySub extends JedisPubSub{
 	
 	// 取的订阅的消息后的处理
 	public void onMessage(String channel,String message){
-//		lock.getLatch().release();
+		lock.getLatch().release();
 		System.out.println(channel+"----"+message);
 	}
 

@@ -2,6 +2,7 @@ package com.test.redis.pubsub;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import redis.clients.jedis.Jedis;
 
@@ -45,13 +46,26 @@ public class PubSubTest {
 				System.out.println("------sub2---");
 			}
 		});
-		
+		Semaphore sema=new Semaphore(0);
 		exec.execute(()->{
 			MyPub pub=new MyPub();
 			pub.myPublish(je3);
+			try {
+				sema.acquire();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("publish wait sub get message");
+			pub.myPublish(je3);
 		});
 		Thread.sleep(1000);
+		System.out.println("-----semaphore acquare wait message-----");
+		sub1.getLock().getLatch().acquire();
+		sub2.getLock().getLatch().acquire();
 		System.out.println("----------");
+		sema.release();
+		System.out.println("----second message------");
+		Thread.sleep(1000);
 		}finally{
 			if(sub1!=null)
 				sub1.unsubscribe();
