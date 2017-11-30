@@ -23,7 +23,7 @@ import com.test.filter.ExceptionTestFilter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @ImportResource("classpath:/spring/applicationContext.xml")
-@SpringBootApplication(scanBasePackages={ "com.test.controller","com.test.service","com.test.handler","com.test.env","com.test.rabbitmq","com.test.springevent"})
+@SpringBootApplication(scanBasePackages={ "com.test.controller","com.test.service","com.test.handler","com.test.env","com.test.rabbitmq","com.test.springevent","com.test.redis"})
 @EnableSwagger2
 public class AppMain {
 	@Value("${app.name}")

@@ -11,7 +11,7 @@ import redis.clients.jedis.Jedis;
 
 public class RedisLock {
 	private static Logger logger=LoggerFactory.getLogger(RedisLock.class);
-	private  RedisTemplate redisTemplate;
+	private RedisTemplate redisTemplate;
 	private static final int DEFAULT_ACQUIRY_RESOLUTION_MILLIS =100;
 	private String lockKey;
 	private int expireMsecs=60*1000;

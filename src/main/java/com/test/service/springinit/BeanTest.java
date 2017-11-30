@@ -10,7 +10,8 @@ import com.taobao.diamond.manager.impl.DefaultDiamondManager;
 
 public class BeanTest {
 	public static void main(String[] args) {
-		diamondtest();
+//		diamondtest();
+		beaninittest();
 	}
 	
 	public static void beaninittest(){

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,15 +18,18 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.test.model.User;
+import com.test.redis.dislock.MyDisLock;
 import com.test.service.UserService;
 import com.test.service.springinit.InitBeanTest;
 import com.test.utils.NebulaException;
 
 @RestController
 public class Usercontroller {
+	private static final Logger logger=LoggerFactory.getLogger(Usercontroller.class);
 	@Autowired
 	private UserService userService;
-	
+	@Autowired
+	private MyDisLock myDisLock;
 	@RequestMapping(value="/user",method=RequestMethod.POST)
 	public JSONObject addUser(@RequestParam String username){
 		 User user=new User();
@@ -119,5 +124,19 @@ public class Usercontroller {
 	@RequestMapping(value="/druid",method=RequestMethod.GET)
 	public JSONArray testDruid() throws NebulaException{
 		return getUserList(1,10);
+	}
+	
+	@RequestMapping(value="/locktest/{uid}",method=RequestMethod.POST)
+	public JSONArray testRedisLock(@PathVariable("uid") String uid){
+		try{
+			myDisLock.tryLock(uid);
+			User user=userService.getUserById(Integer.parseInt(uid));
+			return  (JSONArray) JSON.toJSON(user);
+		}catch(Exception e){
+			
+		}finally{
+			myDisLock.releaseLock(uid.toString());
+		}
+		return null;
 	}
 }

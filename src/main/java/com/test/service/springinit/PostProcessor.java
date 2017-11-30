@@ -5,13 +5,13 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class PostProcessor implements BeanPostProcessor{
 	@Override
 	public Object postProcessBeforeInitialization(Object bean,String beanName){
-		System.out.println("--------post process before init---------");
+//		System.out.println("--------post process before init---------");
 		return bean;
 	}
 	
 	@Override
 	public Object postProcessAfterInitialization(Object bean,String beanName){
-		System.out.println("--------post process after init----------");
+//		System.out.println("--------post process after init----------");
 		return bean;
 	}
 
