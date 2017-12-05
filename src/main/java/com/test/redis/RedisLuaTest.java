@@ -11,7 +11,7 @@ public class RedisLuaTest {
 		List<String> keys=new ArrayList<String>();
 		List<String> vals=new ArrayList<String>();
 		Jedis jedis=RedisConection.getJedis();
-		keys.add("kk");
+		/*keys.add("kk");
 		vals.add("yangyang");
 		Object pobj=jedis.eval("if (redis.call('exists',KEYS[1])==0) then return 0;end;return 1",
 				Arrays.asList(new String[]{"lock"}),
@@ -29,7 +29,9 @@ public class RedisLuaTest {
 				Arrays.asList(new String[]{"10000","lock1"}));
 		System.out.println(pobj);
 		Object ob=jedis.eval("return redis.call('pttl',KEYS[1])",Arrays.asList(new String[]{"lock"}),Arrays.asList(new String[]{"10000","lock1"}));
-		System.out.println("===="+ob);
+		System.out.println("===="+ob);*/
+		
+		
 
 	}
 }

@@ -129,13 +129,13 @@ public class Usercontroller {
 	@RequestMapping(value="/locktest/{uid}",method=RequestMethod.POST)
 	public JSONArray testRedisLock(@PathVariable("uid") String uid){
 		try{
-			myDisLock.tryLock(uid);
+			myDisLock.tryLock(uid,"123");
 			User user=userService.getUserById(Integer.parseInt(uid));
 			return  (JSONArray) JSON.toJSON(user);
 		}catch(Exception e){
 			
 		}finally{
-			myDisLock.releaseLock(uid.toString());
+			myDisLock.releaseLock(uid.toString(),"123");
 		}
 		return null;
 	}
