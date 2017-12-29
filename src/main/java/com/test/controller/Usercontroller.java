@@ -30,6 +30,7 @@ public class Usercontroller {
 	private UserService userService;
 	@Autowired
 	private MyDisLock myDisLock;
+	
 	@RequestMapping(value="/user",method=RequestMethod.POST)
 	public JSONObject addUser(@RequestParam String username){
 		 User user=new User();
