@@ -11,7 +11,19 @@ import com.taobao.diamond.manager.impl.DefaultDiamondManager;
 public class BeanTest {
 	public static void main(String[] args) {
 //		diamondtest();
-		beaninittest();
+//		beaninittest();
+		beanRefTest();
+	}
+	
+	public static void beanRefTest(){
+		ClassPathXmlApplicationContext ac=new ClassPathXmlApplicationContext("/spring/applicationContext.xml");
+		TestB testb=(TestB) ac.getBean("testb");
+		TestC testc=(TestC) ac.getBean("testc");
+		TestA testa=testb.getTesta();
+		TestA testa1=testc.getTesta();
+		testa.setName("123");
+		testb.setTesta(testa);
+		System.out.println("--testc.testa----"+testa1.getName());
 	}
 	
 	public static void beaninittest(){

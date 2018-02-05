@@ -1,5 +1,6 @@
 package com.test.redis.dislock;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -59,7 +60,7 @@ public class MyDisLock {
 				String result=jedis.set(key,clientKey,SEI_IF_NOT_EXIST,SET_WITH_EXPIRE_TIME,EXPIRE_TIME);
 				if(!LOCK_SUCCESS.equals(result)){ // 加锁失败，等待唤醒
 					// 处理订阅信息
-					operateSubscribe(jedis,mysub,semaphore,key);
+					operateSubscribe(jedis,mysub,semaphore,getChannel(key));
 					semaphore.tryAcquire(PER_WAIT_TIME,TimeUnit.SECONDS); // 阻塞中，等待信号量
 					// 再次争抢锁
 					continue;
@@ -78,6 +79,13 @@ public class MyDisLock {
 	}
 	
 	/**
+	 * 
+	 */
+	public String getChannel(String key){
+		return "channel_"+key;
+	}
+	
+	/**
 	 * 释放锁 
 	 * @param key 锁粒度
 	 * @param clientKey 客户端id,解锁权限
@@ -85,8 +93,8 @@ public class MyDisLock {
 	public boolean releaseLock(String key,String clientKey){
 		try{
 			Jedis jedis=getRedisConnection(key);
-			String script="if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del','KEYS[1]') else return 0 end";
-			Object result=jedis.eval(script,Collections.singletonList(key),Collections.singletonList(clientKey));
+			String script="if redis.call('get',KEYS[1])==ARGV[1] then return redis.call('del','KEYS[1]');redis.call('publish',KEYS[1],ARGV[2]) else return 0 end";
+			Object result=jedis.eval(script,Collections.singletonList(key),Arrays.asList(clientKey,getChannel(key)));
 			if(RELEASE_SUCCESS.equals(result)){
 				jedis.publish(key, "释放锁通知等待中的客户端  通道:"+key);
 				return true;
@@ -102,11 +110,11 @@ public class MyDisLock {
 	 * 处理订阅消息 
 	 * @param semaphore 信号量
 	 */
-	private void operateSubscribe(Jedis jedis,JedisPubSub mysub,Semaphore semaphore,String key) {
+	private void operateSubscribe(Jedis jedis,JedisPubSub mysub,Semaphore semaphore,String channel) {
 		exec.execute(new Runnable(){
 			public void run(){
 				// 阻塞 等待释放锁的消息
-				jedis.subscribe(mysub,key);
+				jedis.subscribe(mysub,channel);
 				// 释放信号量
 				semaphore.release();
 			}

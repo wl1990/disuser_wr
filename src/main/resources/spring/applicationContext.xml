@@ -18,5 +18,12 @@
    
 	<bean id="initBeanTest" class="com.test.service.springinit.InitBeanTest"/>
 	<bean id="postProcessor" class="com.test.service.springinit.PostProcessor" scope="singleton" lazy-init="false" destroy-method="destroy"/>
+	<bean id="testa" class="com.test.service.springinit.TestA"/>
+	<bean id="testb" class="com.test.service.springinit.TestB">
+		<property name="testa" ref="testa"/>
+	</bean>
+	<bean id="testc" class="com.test.service.springinit.TestC">
+		<property name="testa" ref="testa"/>
+	</bean>
 	
 </beans>
